@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
@@ -70,6 +70,7 @@ class AdminPanel extends React.Component {
   openModal() {
     $('#modal2').openModal({ dismissible: true });
   }
+
   onChange(event) {
     this.setState({
       searchQuery: event.target.value
@@ -185,12 +186,12 @@ class AdminPanel extends React.Component {
   }
 }
 AdminPanel.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  actions: React.PropTypes.object.isRequired,
-  allRoles: React.PropTypes.array.isRequired,
-  loggedInUser: React.PropTypes.object.isRequired,
-  searchedResult: React.PropTypes.array.isRequired,
-  searchedPageCount: React.PropTypes.object
+  user: PropTypes.object,
+  actions: PropTypes.object,
+  allRoles: PropTypes.array,
+  loggedInUser: PropTypes.object,
+  searchedResult: PropTypes.array,
+  searchedPageCount: PropTypes.object
 };
 /**
  * mapDispatchToProps - maps dispatch to props value
@@ -220,7 +221,7 @@ function mapStateToProps(state) {
     allRoles: state.Roles.roles,
     loggedInUser: state.Auth.user,
     searchedResult: state.Search.searchedUsers,
-    searchedPageCount: state.Search.searchedPageCount
+    searchedPageCount: state.Search.searchedPageCount,
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdminPanel);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -10,7 +10,7 @@ import * as DocumentActions from '../../actions/DocumentAction';
 /** @class CreateDocumentModal
  * @classdesc component for create document modal
  */
-class CreateDocumentModal extends React.Component {
+export class CreateDocumentModal extends React.Component {
   /**
    * constructor - contains the constructor
    * @param  {object} props the properties of the class component
@@ -79,6 +79,9 @@ class CreateDocumentModal extends React.Component {
           $('#modal2').closeModal({ dismissible: true });
           $('.lean-overlay').css({ display: 'none' });
           $('.lean-overlay').remove();
+          $('#access').val('');
+          $('#access').material_select();
+          tinyMCE.activeEditor.setContent('');
           this.setState({
             documents: {
               title: '',
@@ -168,13 +171,6 @@ class CreateDocumentModal extends React.Component {
               </div>
               <div className="col s12 m7 l7 hide-on-med-and-down">
                 <ul className="right">
-                  <li>
-                    <div className="file-field input-field">
-                      <a><i className="material-icons">attach_file</i>
-                        <input type="file"
-                        onChange={this.handleFileUpload} /></a>
-                    </div>
-                  </li>
                   <li><a className="modal-action modal-close">
                     <i href="#!" className="material-icons">close</i></a>
                   </li>
@@ -233,12 +229,12 @@ function mapDispatchToProps(dispatch) {
   };
 }
 CreateDocumentModal.propTypes = {
-  createDocument: React.PropTypes.func.isRequired,
-  document: React.PropTypes.object.isRequired
+  createDocument: PropTypes.func.isRequired,
+  document: PropTypes.object.isRequired
 };
 
 CreateDocumentModal.contextTypes = {
-  router: React.PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 
 export default connect(mapStateToProps,

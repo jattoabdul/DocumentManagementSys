@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -54,7 +54,6 @@ class DashBoard extends React.Component {
       this.props.actions.fetchUsers(userId);
     }
   }
-
   componentWillReceiveProps(nextProps) {
     this.setState({
       allDocuments: nextProps.allDocuments
@@ -86,6 +85,11 @@ class DashBoard extends React.Component {
     });
   }
 
+  /**
+   * deleteDocument - delete a documents
+   * @param  {Number} id document id
+   * @return {void} no return or void
+   */
   deleteDocument(id) {
     this.props.actions.deleteDocument(id)
     .then(() => {
@@ -96,11 +100,21 @@ class DashBoard extends React.Component {
     });
   }
 
+  /**
+   * toggleOpen - open a document
+   * @return {void} no return or void
+   */
   toggleOpen() {
     this.setState({
       selectedId: ''
     });
   }
+
+  /**
+   * onSubmit - handles search action
+   * @param  {Object} event the event handler
+   * @return {void} no return or void
+   */
   onSubmit(event) {
     const searchQuery = this.state.search;
     event.preventDefault();
@@ -123,6 +137,12 @@ class DashBoard extends React.Component {
     const offset = (pageNumber - 1) * 6;
     this.props.actions.searchDocuments(searchQuery, offset);
   }
+
+  /**
+   * onChange - handles the onChange event
+   * @param  {object} event the event handler
+   * @return {void} no return or void
+   */
   onChange(event) {
     const field = event.target.name;
     const state = this.state;
@@ -200,7 +220,9 @@ class DashBoard extends React.Component {
                     Create New Document
                     </a></li>
                     {isAdmin &&
-                    <li><a onClick={() => this.redirect('/admin')} href="">
+                    <li><a
+                    id="admin-link"
+                    onClick={() => this.redirect('/admin')} href="">
                     Admin Panel
                     </a>
                       </li>}
@@ -251,16 +273,16 @@ class DashBoard extends React.Component {
   }
 }
 DashBoard.propTypes = {
-  allDocuments: React.PropTypes.array.isRequired,
-  search: React.PropTypes.object.isRequired,
-  currentUser: React.PropTypes.object.isRequired,
-  actions: React.PropTypes.object.isRequired,
-  activeUser: React.PropTypes.object.isRequired,
-  isAuthenticated: React.PropTypes.bool.isRequired,
-  pagination: React.PropTypes.object.isRequired
+  allDocuments: PropTypes.array.isRequired,
+  search: PropTypes.object.isRequired,
+  currentUser: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+  activeUser: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  pagination: PropTypes.object.isRequired
 };
 DashBoard.contextTypes = {
-  router: React.PropTypes.object.isRequired
+  router: PropTypes.object.isRequired
 };
 /**
  * mapDispatchToProps - maps dispatch to props value

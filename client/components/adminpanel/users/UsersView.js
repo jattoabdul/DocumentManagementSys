@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { getFirstLetter } from '../../../utils/helper';
 import setRole from '../../../utils/setRole';
 
@@ -111,10 +111,12 @@ class UsersView extends React.Component {
             </div>
                   <div className="col s12 m12">
                   <button
+                    id="change-role"
                     onClick={() => this.toggleEdit(currentUser.roleId)}
                     className="btn btn-default col s3 m3 save"
                     type="submit">Change Role</button>
                   <button
+                    id="delete-user"
                     onClick={() => this.onDelete(currentUser.id)}
                     className="btn red col s3 m3 btn-default save "
                     type="submit">Delete User</button>
@@ -122,7 +124,7 @@ class UsersView extends React.Component {
           </div>
           <div className="email-title">
             {isEditing &&
-              <form onSubmit={this.onSubmit} method="post">
+              <form id="roles" onSubmit={this.onSubmit} method="post">
               <div className="input-field col s12">
             {allRoles && allRoles.map((role, index) => {
               return (
@@ -144,6 +146,7 @@ class UsersView extends React.Component {
           <br />
           <br />
               <button
+              id="save-it"
               className="btn btn-default save"
               type="submit">Save</button>
             </form>
@@ -156,12 +159,12 @@ class UsersView extends React.Component {
   }
 }
 UsersView.propTypes = {
-  allRoles: React.PropTypes.array.isRequired,
-  allUsers: React.PropTypes.array.isRequired,
-  selectedUser: React.PropTypes.string.isRequired,
-  loadUser: React.PropTypes.func.isRequired,
-  deleteUser: React.PropTypes.func.isRequired,
-  editRole: React.PropTypes.func.isRequired,
-  changeView: React.PropTypes.func.isRequired
+  allRoles: PropTypes.array.isRequired,
+  allUsers: PropTypes.array.isRequired,
+  selectedUser: PropTypes.string.isRequired,
+  loadUser: PropTypes.func.isRequired,
+  deleteUser: PropTypes.func.isRequired,
+  editRole: PropTypes.func.isRequired,
+  changeView: PropTypes.func.isRequired
 };
 export default UsersView;

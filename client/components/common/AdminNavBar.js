@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import logo from '../../assets/img/data-logo.png';
 
 class NavBar extends React.Component {
@@ -26,6 +26,7 @@ class NavBar extends React.Component {
                   <div className="search">
                     <form onSubmit={onSubmit}>
                       <input type="text"
+                      id="search-user"
                       className="searchTerm"
                       placeholder="What are you looking for?"
                       onChange={onChange}
@@ -42,7 +43,7 @@ class NavBar extends React.Component {
                     <a
                     className="">
                     Showing Result for "{searchQuery}"</a></li>}
-                    { searching && <li className="white">
+                    { searching && <li id="searching" className="white">
                     <a
                     onClick={closeSearch}
                     className="close red-text">
@@ -67,11 +68,11 @@ class NavBar extends React.Component {
   }
 }
 NavBar.propTypes = {
-  onSubmit: React.PropTypes.func.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  searching: React.PropTypes.bool.isRequired,
-  searchQuery: React.PropTypes.string.isRequired,
-  closeSearch: React.PropTypes.func.isRequired,
-  redirect: React.PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  searching: PropTypes.bool.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+  closeSearch: PropTypes.func.isRequired,
+  redirect: PropTypes.func.isRequired
 };
 export default NavBar;

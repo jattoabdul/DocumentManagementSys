@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import EditProfile from './users/EditProfile';
@@ -193,25 +193,17 @@ class WelcomeBoard extends React.Component {
     Role={Role}
     />}
     </div>
-     <table id="useredit" className="striped">
-        <thead>
-          <tr>
-            <th data-field="id">User Details</th>
-            <th
-            className="right"
-            data-field="name">
-            {editProfile ?
+    <span className="left">User Details</span>
+    {editProfile ?
               <a
-              className="red-text"
+              className="right red-text"
               onClick={this.isEditing}>
               Cancel
               </a> :
-              <a onClick={this.isEditing}>
+              <div className="right">
+              <a id="edit-profile" onClick={this.isEditing}>
               Edit Profile
-              </a>}
-              </th>
-          </tr>
-        </thead>
+              </a></div>}
         {editProfile ?
         <EditProfile
         userDetail={this.state.user}
@@ -224,13 +216,14 @@ class WelcomeBoard extends React.Component {
         onConfirm={this.onConfirm}
         />
         :
+        <table id="useredit" className="striped">
         <tbody>
           <tr>
             <td>First Name</td>
-            <td>{activeUser.firstname}</td>
+            <td id="firstname">{activeUser.firstname}</td>
           </tr>
           <tr>
-            <td>Last Name</td>
+            <td id="lastname">Last Name</td>
             <td>{activeUser.lastname}</td>
           </tr>
           <tr>
@@ -241,26 +234,31 @@ class WelcomeBoard extends React.Component {
             <td>Email Address</td>
             <td>{activeUser.email}</td>
           </tr>
-          <tr>
-            <td>Password</td>
             {changePassword ?
-              <div>
+              <tr>
+              <td>
+              <form onSubmit={this.onSubmit}>
               <input
-              className="passkey col s5 m5 l5"
+              className="passkey col s4 m4 l4"
               type="password"
               name="Password"
+              id="password"
               onChange={this.passwordChange}
-              placeholder="Enter New Password"
+              placeholder="New Password"
               value={this.state.password}
               required
               />
-              <input className="passkey col s5 m5 l5" type="password"
+              <input
+              id="confirm-password"
+              className="passkey col s4 m4 l4"
+              type="password"
               name="confirmPassword"
               onChange={this.onConfirm}
-              placeholder="Confirm New Password"
+              placeholder="Confirm Password"
               required
               />
               <button
+              id="submit-password"
               className="btn light-reddish darken-3 passbtn waves-light"
               disabled={invalid}
               onClick={this.onSubmit}
@@ -269,27 +267,31 @@ class WelcomeBoard extends React.Component {
               send
               </i>
               </button>
+              </form>
               <p>
               <span className="left red-text">{errors.confirm}</span>
               <a
               className="red-text"
               onClick={this.changePassword}>Cancel</a> </p>
-              </div>
+              </td>
+              </tr>
               :
-              <td><a onClick={this.changePassword}> Change Password </a></td>}
-          </tr>
-        </tbody>}
-      </table>
+              <tr>
+              <td><a
+              id="change-password"
+              onClick={this.changePassword}> Change Password </a></td>
+            </tr>}
+        </tbody></table>}
     </div>
     );
   }
 }
 WelcomeBoard.propTypes = {
-  allDocuments: React.PropTypes.array.isRequired,
-  currentUserDetails: React.PropTypes.object.isRequired,
-  openDocument: React.PropTypes.func.isRequired,
-  actions: React.PropTypes.object.isRequired,
-  activeUser: React.PropTypes.object.isRequired
+  allDocuments: PropTypes.array.isRequired,
+  currentUserDetails: PropTypes.object.isRequired,
+  openDocument: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
+  activeUser: PropTypes.object.isRequired
 };
 /**
  * mapDispatchToProps - maps dispatch to props value
